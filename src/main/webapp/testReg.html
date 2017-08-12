@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>请输入标题</title>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <script src="js/jquery-3.2.1.js"></script>
+        <script src="js/bootstrap.min.js"></script> 
+    </head>
+    <body>
+    	<input type="text" id="testId"/>
+    	<br/>
+    	<br/>
+    	<input type="button" value="click me" id="click"/>
+        
+        <script type="text/javascript">
+//         	var reg=/^(?:.*[a-z].*)(?:.*[A-Z].*)(?:.*[0-9].*)w{6,16}$/;
+//         	var reg1 = /^(?:.*[a-z].*[A-Z].*)(?:.*[A-Z].*)$/;
+        	var reg1 = /^(?:.*(([a-z].*[A-Z].*\d+)|([A-Z].*[a-z].*\d+)|([a-z].*\d+.*[A-Z])|([A-Z].*\d+.*[a-z])|(\d+.*[a-z].*[A-Z])|(\d+.*[A-Z].*[a-z])).*)$/;
+        	$(function(){
+        		$("#click").click(function(){
+        			var val = $("#testId").val();
+//             		console.log(val.match(reg1)+"---"+val);
+            		console.log(reg1.test(val)+"---"+val);
+        		});
+        	});
+        	
+        </script>
+        
+    </body>
+</html>

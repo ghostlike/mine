@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+<!--     <link rel="icon" href="../../favicon.ico"> -->
+    <title>mine</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+    <link href="css/login.css" rel="stylesheet">
+    <script src="js/jquery-3.2.1.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="assets/js/ie-emulation-modes-warning.js"></script>
+  </head>
+
+  <body>
+	<div class="container">
+	      <form class="form-login" action="loginout/login.do">
+	        <h2 class="form-login-heading">Please log in</h2>
+	        <label for="username" class="sr-only">User name</label>
+	        <input type="text" id="username" class="form-control" placeholder="User name" required autofocus>
+	        <label for="password" class="sr-only">Password</label>
+	        <input type="password" id="password" class="form-control" placeholder="Password" required>
+	        <div class="checkbox">
+	        <label>
+	          <input type="checkbox" value="remember-me"> Remember me
+	        </label>
+	        </div>
+	        <button class="btn btn-lg btn-primary col-lg-5" type="submit">Log in</button>
+	        <button class="btn btn-lg btn-info col-lg-offset-2 col-lg-5" 
+	        	data-toggle="modal" data-target="#signinModal"
+	        	type="button" id="signin">Sign in</button>
+	      </form>
+	</div>
+        <div class="modal fade " id="signinModal" tabindex="-1" role="dialog" aria-labelledby="#myTitle" aria-hidden="true" data-backdrop="false">
+        	<div class="modal-dialog">
+        		<div class="modal-content">
+        			<div class="modal-header">
+        				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        				<h4 class="modal-title" id="myTitle">注册</h4>
+        			</div>
+	        		<div class="modal-body">
+	        			<form class="form-signin">
+							<h2 class="form-sign-heading">Please sign in</h2>
+							<div class="form-group">
+								<label for="username" class="sr-only">User name</label>
+								<input type="text" id="username" class="form-control" placeholder="请输入用户名" required autofocus>
+							</div>
+							<div class="form-group">
+								<label for="password" class="sr-only">Password</label>
+								<input type="password" id="pwd1" class="form-control" placeholder="请输入密码" required>
+							</div>
+							<div class="form-group">
+								<label for="password_check" class="sr-only">Password check</label>
+								<input type="password" id="pwd2" class="form-control" placeholder="请再次输入密码" required>
+							</div>
+						</form>
+	        		</div>
+	        		<div class="modal-footer">
+	        			<button class="btn btn-primary" type="submit">注册</button>
+						<button class="btn btn-default" data-dismiss="modal"
+							type="button" id="back">返回</button>
+	        		</div>
+        		</div>
+        	</div>
+        </div>
+    <script src="assets/js/ie10-viewport-bug-workaround.js"></script>
+    
+    <script type="text/javascript">
+    	$(function(){
+    		$(":password").on("blur",checkPwd);
+    	});
+		function checkPwd(){
+			var pwd1 = $.trim($("#pwd1").val());
+			if(pwd1 == ""){
+				alert("请输入密码");
+				$("#pwd1").val(pwd1);
+				return;
+			}
+			if(!validate(pwd1))
+				return false;
+			}
+			
+			var pwd2 = $.trim($("#pwd2").val());
+			if(pwd2 == ""){
+				alert("请再次输入密码");
+				pwd2.value=$("#pwd2").val("");
+				return;
+			}else{
+				if(pwd1!=pwd2){
+					alert("两次输入密码不一致");
+				}
+			}
+		}
+		
+		/** 该方法用于检验输入的内容是否一定包含：大写字母、小写字母、数字，且无关顺序*/
+		function validate(content){
+			var reg = /^(?:.*(([a-z].*[A-Z].*\d+)|([A-Z].*[a-z].*\d+)|([a-z].*\d+.*[A-Z])|([A-Z].*\d+.*[a-z])|(\d+.*[a-z].*[A-Z])|(\d+.*[A-Z].*[a-z])).*)$/;
+			return reg.test(content);
+			
+		}
+		
+    </script>
+  </body>
+</html>
