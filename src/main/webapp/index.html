@@ -47,20 +47,21 @@
 							<h2 class="form-sign-heading">Please sign in</h2>
 							<div class="form-group">
 								<label for="username" class="sr-only">User name</label>
-								<input type="text" id="username" class="form-control" placeholder="请输入用户名" required autofocus>
+								<input type="text" id="username1" name="username" class="form-control" placeholder="请输入用户名" required autofocus/>
 							</div>
 							<div class="form-group">
 								<label for="password" class="sr-only">Password</label>
-								<input type="password" id="pwd1" class="form-control" placeholder="请输入密码" required>
+								<input type="password" id="pwd1" name="password" class="form-control" placeholder="请输入密码" required/>
 							</div>
 							<div class="form-group">
 								<label for="password_check" class="sr-only">Password check</label>
-								<input type="password" id="pwd2" class="form-control" placeholder="请再次输入密码" required>
+								<input type="password" id="pwd2" name="password2" class="form-control" placeholder="请再次输入密码" required/>
 							</div>
+							<div id="tips" class="alert alert-danger hidden">错误！请进行一些更改。</div>
 						</form>
 	        		</div>
 	        		<div class="modal-footer">
-	        			<button class="btn btn-primary" type="submit">注册</button>
+	        			<button id="submit" class="btn btn-primary" type="submit">注册</button>
 						<button class="btn btn-default" data-dismiss="modal"
 							type="button" id="back">返回</button>
 	        		</div>
@@ -70,32 +71,60 @@
     <script src="assets/js/ie10-viewport-bug-workaround.js"></script>
     
     <script type="text/javascript">
-    	$(function(){
-    		$(":password").on("blur",checkPwd);
-    	});
-		function checkPwd(){
-			var pwd1 = $.trim($("#pwd1").val());
-			if(pwd1 == ""){
-				alert("请输入密码");
-				$("#pwd1").val(pwd1);
-				return;
-			}
-			if(!validate(pwd1))
+   		//shown.bs.modal
+   		$("#signinModal").on("shown.bs.modal",function(){
+   			$("input").on("blur",check);
+   			$("#submit").on("click",function(){
+   					console.log($(".form-signin").serialize());
+   				if(check()){
+   					// 提交表单信息
+   					$.ajax
+   				}
+   			});
+   		});
+		function check(){
+			$("#tips").addClass("hidden");
+			if(!checkUserName()){
 				return false;
 			}
-			
-			var pwd2 = $.trim($("#pwd2").val());
-			if(pwd2 == ""){
-				alert("请再次输入密码");
-				pwd2.value=$("#pwd2").val("");
-				return;
-			}else{
-				if(pwd1!=pwd2){
-					alert("两次输入密码不一致");
-				}
+			if(!checkPwd()){
+				return false;
 			}
+			return true;
 		}
-		
+		function checkUserName(){
+			var username = $.trim($("#username1").val());
+			if(!username){
+				showTips("请输入用户名");
+				return false;
+			}
+			return true;
+		}
+		function checkPwd(){
+			var pwd1 = $.trim($("#pwd1").val());
+			if(pwd1==""){
+				showTips("请输入密码");
+				return false;
+			}
+			if(!validate(pwd1)){
+				showTips("密码必须包含大写字母、小写字母和数字");
+				return false;
+			}
+			var pwd2 = $.trim($("#pwd2").val());
+			if(pwd2==""){
+				showTips("请再次输入密码");
+				return false;
+			}
+			if(pwd2 != pwd1){
+				showTips("两次输入的密码不一致，请重新确认");
+				return false;
+			}
+			return true;
+		}
+		function showTips(content){
+			$("#tips").html(content);
+			$("#tips").removeClass("hidden");
+		}
 		/** 该方法用于检验输入的内容是否一定包含：大写字母、小写字母、数字，且无关顺序*/
 		function validate(content){
 			var reg = /^(?:.*(([a-z].*[A-Z].*\d+)|([A-Z].*[a-z].*\d+)|([a-z].*\d+.*[A-Z])|([A-Z].*\d+.*[a-z])|(\d+.*[a-z].*[A-Z])|(\d+.*[A-Z].*[a-z])).*)$/;
